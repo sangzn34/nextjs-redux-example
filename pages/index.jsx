@@ -1,29 +1,25 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {decrementCounter, incrementCounter} from '../redux/actions/counterActions';
+import { connect, useSelector } from 'react-redux';
+import { useRouter } from 'next/router'
+import { decrementCounter, incrementCounter } from '../redux/actions/counterActions';
 
-class App extends React.Component {
-
-    static getInitialProps({store}) {}
-
-    constructor(props) {
-        super(props);
+const App = (props) => {
+    const counter = useSelector(state => state.counter.value)
+    const router = useRouter()
+    const click = () => {
+        router.push('/link')
     }
-
-    render() {
-        return (
-            <div>
-                <button onClick={this.props.incrementCounter}>Increment</button>
-                <button onClick={this.props.decrementCounter}>Decrement</button>
-                <h1>{this.props.counter}</h1>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <button onClick={click}>link</button>
+            <button onClick={props.incrementCounter}>Increment</button>
+            <button onClick={props.decrementCounter}>Decrement</button>
+            <h1>{counter}</h1>
+        </div>
+    );
 }
 
-const mapStateToProps = state => ({
-    counter: state.counter.value
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {
     incrementCounter: incrementCounter,
